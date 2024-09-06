@@ -14,4 +14,23 @@ class LASERSIMULATOR_API ALSCameraActor : public ACameraActor
 {
 	GENERATED_BODY()
 	
+
+public:
+
+	ALSCameraActor();
+
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite)
+	float XGap = 700;
+
+protected:
+
+	UPROPERTY(Transient)
+	class ALSCharacter* Character;
+
+
+private:
+
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+
 };
