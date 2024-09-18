@@ -23,11 +23,6 @@ void ALSCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (InputMovement.X != 0 && InputMovement.Y != 0)
-	{
-		InputMovement.Y = 0;
-	}
-
 	FVector MovementDirection = FVector(InputMovement.X, InputMovement.Y, 0);
 	AddMovementInput(MovementDirection);
 	if (MovementDirection.Size2D() > 0)
