@@ -22,6 +22,9 @@ public:
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite)
 	float XGap = 700;
 
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite)
+	float CameraSpeed = 700;
+
 protected:
 
 	UPROPERTY(Transient)

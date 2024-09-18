@@ -23,9 +23,12 @@ void ALSCameraActor::Tick(float DeltaTime)
 
 	if (Character)
 	{
-		FVector NewCameraLocation = GetActorLocation();
-		NewCameraLocation.X = Character->GetActorLocation().X - XGap;
+		FVector TargetLocation = Character->GetActorLocation();
 
+		FVector NewCameraLocation = FMath::VInterpTo(GetActorLocation(), TargetLocation + FVector(-XGap, 0.f, 0.f), DeltaTime, CameraSpeed);
 		SetActorLocation(NewCameraLocation);
+
+		FRotator NewRotation = (TargetLocation - GetActorLocation()).Rotation();
+		SetActorRotation(NewRotation);
 	}
 }
