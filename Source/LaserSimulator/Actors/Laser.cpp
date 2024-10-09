@@ -39,7 +39,7 @@ void ALaser::SearchCharacterInRadius()
 		if (DistanceSqr <= (500 * 500))
 		{
 			if (GEngine)
-				GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Yellow, TEXT("Estoy dentro del radio"));
+				GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Yellow, TEXT("Estoy dentro del radio del laser"));
 		}
 	}
 }

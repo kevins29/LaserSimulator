@@ -18,6 +18,11 @@ void ALSCharacter::BeginPlay()
 	
 }
 
+void ALSCharacter::OpenUI()
+{
+
+}
+
 // Called every frame
 void ALSCharacter::Tick(float DeltaTime)
 {
