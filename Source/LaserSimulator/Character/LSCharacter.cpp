@@ -52,7 +52,7 @@ void ALSCharacter::Tick(float DeltaTime)
 		}
 	}
 
-	GetIsPCCollision();
+	bIsCollsionWithPc();
 }
 
 // Called to bind functionality to input
@@ -62,7 +62,7 @@ void ALSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 }
 
-bool ALSCharacter::GetIsPCCollision()
+bool ALSCharacter::bIsCollsionWithPc()
 {
 	if (Camera) 
 	{

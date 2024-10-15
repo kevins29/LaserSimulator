@@ -28,7 +28,7 @@ public:
 	UPROPERTY(Transient)
 	class AComputer* Computer;
 
-	bool GetIsPCCollision();
+	bool bIsCollsionWithPc();
 
 protected:
 	// Called when the game starts or when spawned

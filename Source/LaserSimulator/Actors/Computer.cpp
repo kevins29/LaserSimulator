@@ -34,7 +34,7 @@ void AComputer::SearchCharacterOnRadius()
 {
 	if (Character)
 	{
-		if (Character->GetIsPCCollision()) 
+		if (Character->bIsCollsionWithPc())
 		{
 			DrawDebugSphere(GetWorld(), GetActorLocation(), 90.0f, 20.0f, FColor::Purple, false, 2.0f);
 		}
