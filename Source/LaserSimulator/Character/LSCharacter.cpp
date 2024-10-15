@@ -3,8 +3,10 @@
 
 #include "Character/LSCharacter.h"
 #include "Camera/LSCameraActor.h"
+#include "Actors/Computer.h"
 
 #include "Kismet/GameplayStatics.h"
+#include "DrawDebugHelpers.h"
 
 // Sets default values
 ALSCharacter::ALSCharacter()
@@ -20,6 +22,7 @@ void ALSCharacter::BeginPlay()
 	Super::BeginPlay();
 	
 	Camera = Cast<ALSCameraActor>(UGameplayStatics::GetActorOfClass(GetWorld(), ALSCameraActor::StaticClass()));
+	Computer = Cast<AComputer>(UGameplayStatics::GetActorOfClass(GetWorld(), AComputer::StaticClass()));
 }
 
 void ALSCharacter::OpenUI()
@@ -48,6 +51,8 @@ void ALSCharacter::Tick(float DeltaTime)
 			LastMovementDirection = MovementDirection;
 		}
 	}
+
+	GetIsPCCollision();
 }
 
 // Called to bind functionality to input
@@ -57,3 +62,43 @@ void ALSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 }
 
+bool ALSCharacter::GetIsPCCollision()
+{
+	if (Camera) 
+	{
+		FCollisionQueryParams QueryParams;
+		FHitResult OutHit;
+		QueryParams.AddIgnoredActor(this);
+		QueryParams.AddIgnoredActor(Camera);
+
+		TEnumAsByte<enum ECollisionChannel> CustomHitCollisionChannnel = ECC_GameTraceChannel1;
+
+		if (CustomHitCollisionChannnel)
+		{
+			FVector CameraPosition = Camera->GetActorLocation();
+			FRotator CameraRotation = Camera->GetActorRotation();
+
+			FVector StarPosition = CameraPosition;
+			FVector EndPosition = StarPosition + (CameraRotation.Vector()) * 200.0f;
+
+			DrawDebugLine(GetWorld(), StarPosition, EndPosition, FColor::Emerald, false, 0.05f, 0.0f, 1.0f);
+
+			bool bIsHit = GetWorld()->LineTraceSingleByChannel(OutHit, StarPosition, EndPosition, CustomHitCollisionChannnel, QueryParams);
+
+			if (bIsHit)
+			{
+				if (GEngine)
+					GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, *OutHit.Component->GetName());
+			}
+			else
+			{
+				if (GEngine)
+					GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("No collision"));
+			}
+
+			return bIsHit;
+		}
+	}
+
+	return false;
+}

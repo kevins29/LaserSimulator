@@ -34,11 +34,9 @@ void AComputer::SearchCharacterOnRadius()
 {
 	if (Character)
 	{
-		const float DistanceSqr = (GetActorLocation() - Character->GetActorLocation()).SizeSquared2D();
-
-		if (DistanceSqr <= (500 * 500))
+		if (Character->GetIsPCCollision()) 
 		{
-			Character->OpenUI();
+			DrawDebugSphere(GetWorld(), GetActorLocation(), 90.0f, 20.0f, FColor::Purple, false, 2.0f);
 		}
 	}
 }

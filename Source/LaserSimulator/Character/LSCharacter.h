@@ -25,6 +25,11 @@ public:
 	UPROPERTY(Transient)
 	class ALSCameraActor* Camera;
 
+	UPROPERTY(Transient)
+	class AComputer* Computer;
+
+	bool GetIsPCCollision();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
