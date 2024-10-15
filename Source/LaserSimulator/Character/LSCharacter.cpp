@@ -2,6 +2,9 @@
 
 
 #include "Character/LSCharacter.h"
+#include "Camera/LSCameraActor.h"
+
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ALSCharacter::ALSCharacter()
@@ -16,6 +19,7 @@ void ALSCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	Camera = Cast<ALSCameraActor>(UGameplayStatics::GetActorOfClass(GetWorld(), ALSCameraActor::StaticClass()));
 }
 
 void ALSCharacter::OpenUI()
@@ -28,13 +32,22 @@ void ALSCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	FVector MovementDirection = FVector(InputMovement.X, InputMovement.Y, 0);
-	AddMovementInput(MovementDirection);
-	if (MovementDirection.Size2D() > 0)
+	if (Camera) 
 	{
-		LastMovementDirection = MovementDirection;
-	}
+		FRotator CameraRotation = Camera->GetActorRotation();
 
+		//Set Charater MovementDirection based on the derection of the camera
+		FVector ForwardDirection = FRotationMatrix(CameraRotation).GetUnitAxis(EAxis::X);
+		FVector RightDirection = FRotationMatrix(CameraRotation).GetUnitAxis(EAxis::Y);
+
+		FVector MovementDirection = (ForwardDirection * InputMovement.X) + (RightDirection * InputMovement.Y);
+		AddMovementInput(MovementDirection);
+
+		if (MovementDirection.Size2D() > 0)
+		{
+			LastMovementDirection = MovementDirection;
+		}
+	}
 }
 
 // Called to bind functionality to input

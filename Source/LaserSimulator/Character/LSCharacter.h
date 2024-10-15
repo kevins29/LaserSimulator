@@ -22,6 +22,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FVector LastMovementDirection;
 
+	UPROPERTY(Transient)
+	class ALSCameraActor* Camera;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
