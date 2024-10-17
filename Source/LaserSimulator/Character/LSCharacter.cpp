@@ -87,13 +87,8 @@ bool ALSCharacter::bIsCollsionWithPc()
 
 			if (bIsHit)
 			{
-				if (GEngine)
-					GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, *OutHit.Component->GetName());
-			}
-			else
-			{
-				if (GEngine)
-					GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("No collision"));
+				//if (GEngine)
+					//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, *OutHit.Component->GetName());
 			}
 
 			return bIsHit;

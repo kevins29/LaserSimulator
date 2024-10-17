@@ -18,6 +18,8 @@ public:
 
 	void InputMovementX(float Value);
 	void InputMovementY(float Value);
+
+	void InputInteract();
 	
 	FVector2D InputMovement = FVector2D::ZeroVector;
 

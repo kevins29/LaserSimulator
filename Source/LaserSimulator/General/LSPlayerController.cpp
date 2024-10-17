@@ -11,6 +11,8 @@ void ALSPlayerController::SetupInputComponent()
 
 	InputComponent->BindAxis("MovementX", this, &ALSPlayerController::InputMovementX);
 	InputComponent->BindAxis("MovementY", this, &ALSPlayerController::InputMovementY);
+
+	InputComponent->BindAction("Interact",IE_Pressed, this, &ALSPlayerController::InputInteract);
 }
 
 void ALSPlayerController::BeginPlay()
@@ -39,4 +41,10 @@ void ALSPlayerController::InputMovementY(float Value)
 	{
 		Character->InputMovement.Y = Value;
 	}
+}
+
+void ALSPlayerController::InputInteract()
+{
+	if (GEngine)
+		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("pressed"));
 }
