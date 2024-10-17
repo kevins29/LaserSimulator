@@ -70,13 +70,9 @@ void UInteractComponent::ShowUI()
 
 						const float DistanceSqr = (ActorLocation - CharacterLocation).SizeSquared2D();
 
-						if (DistanceSqr <= (ActorInfo.DistanceToInteract * ActorInfo.DistanceToInteract) && Character->bIsCollsionWithPc())
+						if (DistanceSqr <= (ActorInfo.DistanceToInteract * ActorInfo.DistanceToInteract) && Character->bIsTraceWithActor())
 						{
 							CanShowWidget = true;
-
-							if (GEngine)
-								GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Purple, *Actor->GetName());
-
 							DrawDebugSphere(GetWorld(), ActorLocation, 90.0f, 20.0f, FColor::Purple, false, 2.0f);
 							break;
 						}
@@ -90,7 +86,7 @@ void UInteractComponent::ShowUI()
 					else if (!CanShowWidget && UI->Visibility != ESlateVisibility::Hidden)
 					{
 						UI->SetVisibility(ESlateVisibility::Hidden);
-						UI->RemoveFromViewport();
+						UI->RemoveFromParent();
 					}
 				}
 			}

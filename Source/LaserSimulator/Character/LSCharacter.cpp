@@ -4,6 +4,7 @@
 #include "Character/LSCharacter.h"
 #include "Camera/LSCameraActor.h"
 #include "Actors/Computer.h"
+#include "Actors/Laser.h"
 
 #include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
@@ -23,6 +24,7 @@ void ALSCharacter::BeginPlay()
 	
 	Camera = Cast<ALSCameraActor>(UGameplayStatics::GetActorOfClass(GetWorld(), ALSCameraActor::StaticClass()));
 	Computer = Cast<AComputer>(UGameplayStatics::GetActorOfClass(GetWorld(), AComputer::StaticClass()));
+	Laser = Cast<ALaser>(UGameplayStatics::GetActorOfClass(GetWorld(), ALaser::StaticClass()));
 }
 
 void ALSCharacter::OpenUI()
@@ -52,7 +54,7 @@ void ALSCharacter::Tick(float DeltaTime)
 		}
 	}
 
-	bIsCollsionWithPc();
+	bIsTraceWithActor();
 }
 
 // Called to bind functionality to input
@@ -62,9 +64,9 @@ void ALSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 }
 
-bool ALSCharacter::bIsCollsionWithPc()
+bool ALSCharacter::bIsTraceWithActor()
 {
-	if (Camera) 
+	if (Camera && Computer && Laser) 
 	{
 		FCollisionQueryParams QueryParams;
 		FHitResult OutHit;
@@ -87,8 +89,19 @@ bool ALSCharacter::bIsCollsionWithPc()
 
 			if (bIsHit)
 			{
-				//if (GEngine)
-					//GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, *OutHit.Component->GetName());
+				if (OutHit.GetActor()->GetActorLabel() == Computer->GetActorLabel()) 
+				{
+					Computer->CanInteractWithPc = true;
+				}
+				else if (OutHit.GetActor()->GetActorLabel() == Laser->GetActorLabel()) 
+				{
+					Laser->CanInteractWithLaser = true;
+				}
+			}
+			else 
+			{
+				Computer->CanInteractWithPc = false;
+				Laser->CanInteractWithLaser = false;
 			}
 
 			return bIsHit;
@@ -97,3 +110,4 @@ bool ALSCharacter::bIsCollsionWithPc()
 
 	return false;
 }
+

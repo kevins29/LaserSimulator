@@ -18,14 +18,20 @@ public:
 	UPROPERTY(Transient)
 	class ALSCharacter* Character;
 
+	UPROPERTY(Transient)
+	bool CanInteractWithPc = false;
+
+	UPROPERTY(Transient)
+	bool bIsComputerOn = false;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	void SearchCharacterOnRadius();
-
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void PCinteract();
 
 };

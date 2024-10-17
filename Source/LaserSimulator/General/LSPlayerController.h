@@ -27,6 +27,12 @@ public:
 public:
 	class ALSCharacter* Character = nullptr;
 
+	UPROPERTY(Transient)
+	class AComputer* Computer;
+
+	UPROPERTY(Transient)
+	class ALaser* Laser;
+
 private:
 
 	virtual void Tick(float DeltaTime) override;

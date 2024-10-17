@@ -3,6 +3,10 @@
 
 #include "General/LSPlayerController.h"
 #include "Character/LSCharacter.h"
+#include "Actors/Computer.h"
+#include "Actors/Laser.h"
+
+#include "Kismet/GameplayStatics.h"
 
 
 void ALSPlayerController::SetupInputComponent()
@@ -20,6 +24,8 @@ void ALSPlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	Character = Cast<ALSCharacter>(GetPawn());
+	Computer = Cast<AComputer>(UGameplayStatics::GetActorOfClass(GetWorld(), AComputer::StaticClass()));
+	Laser = Cast<ALaser>(UGameplayStatics::GetActorOfClass(GetWorld(), ALaser::StaticClass()));
 }
 
 void ALSPlayerController::Tick(float DeltaTime)
@@ -45,6 +51,13 @@ void ALSPlayerController::InputMovementY(float Value)
 
 void ALSPlayerController::InputInteract()
 {
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("pressed"));
+	if (Computer && Laser) 
+	{
+		Computer->PCinteract();
+		
+		if (Computer->bIsComputerOn) 
+		{
+			Laser->LaserInteract();
+		}
+	}
 }

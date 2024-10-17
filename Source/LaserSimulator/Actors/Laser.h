@@ -18,14 +18,27 @@ public:
 	UPROPERTY(Transient)
 	class ALSCharacter* Character;
 
+	UPROPERTY(Transient)
+	bool CanInteractWithLaser = false;
+
+	UPROPERTY(EditInstanceOnly)
+	TSubclassOf<class USettingsWidget> WSettings;
+
+	UPROPERTY(Transient)
+	class USettingsWidget* WidgetSettings;
+
+	UPROPERTY(Transient)
+	class ALSPlayerController* PlayerController;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	void SearchCharacterInRadius();
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void LaserInteract();
+
+	bool bIsCharacterOnRange();
 };

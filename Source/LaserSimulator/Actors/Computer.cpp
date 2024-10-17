@@ -27,16 +27,36 @@ void AComputer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	SearchCharacterOnRadius();
 }
 
-void AComputer::SearchCharacterOnRadius()
+void AComputer::PCinteract()
 {
-	if (Character)
+	if (!Character)
+		return;
+
+	if (Character->bIsTraceWithActor()) 
 	{
-		if (Character->bIsCollsionWithPc())
+		if (CanInteractWithPc)
 		{
-			//DrawDebugSphere(GetWorld(), GetActorLocation(), 90.0f, 20.0f, FColor::Purple, false, 2.0f);
+			bIsComputerOn = !bIsComputerOn;
+
+			if (bIsComputerOn) 
+			{
+				if (GEngine)
+					GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, TEXT("TurnOnPC"));
+			}
+			else
+			{
+				if (GEngine)
+					GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("TurnOffPC"));
+			}
+			
 		}
+		
+	}
+
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Cyan, FString::Printf(TEXT("bIsComputerOn: %s"), bIsComputerOn ? TEXT("true") : TEXT("false")));
 	}
 }

@@ -28,7 +28,11 @@ public:
 	UPROPERTY(Transient)
 	class AComputer* Computer;
 
-	bool bIsCollsionWithPc();
+	UPROPERTY(Transient)
+	class ALaser* Laser;
+
+	bool bIsTraceWithActor();
+
 
 protected:
 	// Called when the game starts or when spawned
