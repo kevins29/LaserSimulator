@@ -57,14 +57,18 @@ void ALaser::Tick(float DeltaTime)
 
 void ALaser::LaserInteract()
 {
-	if (!Character)
+	if (!Character || !PlayerController || !WidgetSettings)
 		return;
 
-	if (Character->bIsTraceWithActor()) 
+	bool bHideWidget = false;
+
+	if (Character->bIsTraceWithActor() && WidgetSettings && PlayerController)
 	{
 		if (CanInteractWithLaser && bIsCharacterOnRange())
 		{
-			if (WidgetSettings && PlayerController) 
+			bHideWidget = !bHideWidget;
+
+			if (bHideWidget) 
 			{
 				if (WidgetSettings->Visibility != ESlateVisibility::Visible)
 				{
@@ -73,6 +77,20 @@ void ALaser::LaserInteract()
 
 					PlayerController->bShowMouseCursor = true;
 				}
+			}
+			else 
+			{
+				if (WidgetSettings->Visibility != ESlateVisibility::Hidden)
+				{
+					WidgetSettings->SetVisibility(ESlateVisibility::Hidden);
+					WidgetSettings->RemoveFromParent();
+
+					PlayerController->bShowMouseCursor = false;
+				}
+			}
+			if (GEngine)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, FString::Printf(TEXT("bHideWidget: %s"), bHideWidget ? TEXT("true") : TEXT("false")));
 			}
 		}
 	}
@@ -87,10 +105,7 @@ bool ALaser::bIsCharacterOnRange()
 
 		const float DistanceSqr = (CharaterLocation - LaserLocation).SizeSquared2D();
 
-		if (DistanceSqr <= (200 * 200)) 
-		{
-			return true;
-		}
+		return DistanceSqr <= (200 * 200) ? true : false;
 	}
 
 	return false;

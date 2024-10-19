@@ -3,6 +3,8 @@
 
 #include "Actors/Computer.h"
 #include "Character/LSCharacter.h"
+#include "UI/SettingsWidget.h"
+#include "General/LSPlayerController.h"
 
 #include "Kismet/GameplayStatics.h"
 
@@ -20,6 +22,18 @@ void AComputer::BeginPlay()
 	Super::BeginPlay();
 	
 	Character = Cast<ALSCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
+	PlayerController = Cast<ALSPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+
+	if (WSettings)
+	{
+		WidgetSettings = CreateWidget<USettingsWidget>(GetWorld(), WSettings);
+
+		if (WidgetSettings)
+		{
+			WidgetSettings->SetVisibility(ESlateVisibility::Hidden);
+		}
+	}
 }
 
 // Called every frame
@@ -27,6 +41,29 @@ void AComputer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	bIsInCharacterRange();
+
+	if (WidgetSettings && PlayerController)
+	{
+		if (!bIsInCharacterRange() && WidgetSettings->Visibility != ESlateVisibility::Hidden)
+		{
+			WidgetSettings->SetVisibility(ESlateVisibility::Hidden);
+			WidgetSettings->RemoveFromParent();
+
+			PlayerController->bShowMouseCursor = false;
+		}
+		else if (bIsComputerOn && bIsInCharacterRange() && WidgetSettings->Visibility != ESlateVisibility::Visible)
+		{
+			WidgetSettings->SetVisibility(ESlateVisibility::Visible);
+			WidgetSettings->AddToViewport();
+
+			PlayerController->bShowMouseCursor = true;
+		}
+	}
+	if (GEngine)
+	{
+		//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("bIsInCharacterRange(): %s"), bIsInCharacterRange() ? TEXT("true") : TEXT("false")));
+	}
 }
 
 void AComputer::PCinteract()
@@ -36,27 +73,50 @@ void AComputer::PCinteract()
 
 	if (Character->bIsTraceWithActor()) 
 	{
-		if (CanInteractWithPc)
+		if (CanInteractWithPc && bIsInCharacterRange())
 		{
 			bIsComputerOn = !bIsComputerOn;
 
 			if (bIsComputerOn) 
 			{
-				if (GEngine)
-					GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Green, TEXT("TurnOnPC"));
+				if (WidgetSettings->Visibility != ESlateVisibility::Visible)
+				{
+					WidgetSettings->SetVisibility(ESlateVisibility::Visible);
+					WidgetSettings->AddToViewport();
+
+					PlayerController->bShowMouseCursor = true;
+				}
 			}
 			else
 			{
-				if (GEngine)
-					GEngine->AddOnScreenDebugMessage(-1, 1.0f, FColor::Red, TEXT("TurnOffPC"));
+				if (WidgetSettings->Visibility != ESlateVisibility::Hidden)
+				{
+					WidgetSettings->SetVisibility(ESlateVisibility::Hidden);
+					WidgetSettings->RemoveFromParent();
+
+					PlayerController->bShowMouseCursor = false;
+				}
 			}
-			
 		}
-		
 	}
 
 	if (GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Cyan, FString::Printf(TEXT("bIsComputerOn: %s"), bIsComputerOn ? TEXT("true") : TEXT("false")));
 	}
+}
+
+bool AComputer::bIsInCharacterRange()
+{
+	if (Character)
+	{
+		FVector CharaterLocation = Character->GetActorLocation();
+		FVector LaserLocation = GetActorLocation();
+
+		const float DistanceSqr = (CharaterLocation - LaserLocation).SizeSquared2D();
+
+		return DistanceSqr <= (400 * 400) ? true : false;
+	}
+
+	return false;
 }

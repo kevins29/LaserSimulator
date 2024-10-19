@@ -92,10 +92,12 @@ bool ALSCharacter::bIsTraceWithActor()
 				if (OutHit.GetActor()->GetActorLabel() == Computer->GetActorLabel()) 
 				{
 					Computer->CanInteractWithPc = true;
+					return bIsHit;
 				}
 				else if (OutHit.GetActor()->GetActorLabel() == Laser->GetActorLabel()) 
 				{
 					Laser->CanInteractWithLaser = true;
+					return bIsHit;
 				}
 			}
 			else 
@@ -103,8 +105,6 @@ bool ALSCharacter::bIsTraceWithActor()
 				Computer->CanInteractWithPc = false;
 				Laser->CanInteractWithLaser = false;
 			}
-
-			return bIsHit;
 		}
 	}
 
