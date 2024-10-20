@@ -26,7 +26,7 @@ public:
 	virtual void NativeConstruct() override;
 
 	UPROPERTY(meta = (BindWidget))
-	class UButton* ClaseUIButton;
+	class UButton* CloseUIButton;
 
 	UFUNCTION()
 	void OnButtonCliked();

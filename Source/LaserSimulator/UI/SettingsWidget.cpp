@@ -22,9 +22,9 @@ void USettingsWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	if (ClaseUIButton)
+	if (CloseUIButton)
 	{
-		ClaseUIButton->OnClicked.AddDynamic(this, &USettingsWidget::OnButtonCliked);
+		CloseUIButton->OnClicked.AddDynamic(this, &USettingsWidget::OnButtonCliked);
 	}
 }
 
