@@ -45,17 +45,15 @@ void AComputer::Tick(float DeltaTime)
 
 	if (WidgetSettings && PlayerController)
 	{
-		if (!bIsInCharacterRange() && WidgetSettings->Visibility != ESlateVisibility::Hidden)
+		if (!bIsInCharacterRange())
 		{
-			WidgetSettings->SetVisibility(ESlateVisibility::Hidden);
-			WidgetSettings->RemoveFromParent();
+			WidgetSettings->CloseUI();
 
 			PlayerController->bShowMouseCursor = false;
 		}
-		else if (bIsComputerOn && bIsInCharacterRange() && WidgetSettings->Visibility != ESlateVisibility::Visible)
+		else if (bIsComputerOn && bIsInCharacterRange())
 		{
-			WidgetSettings->SetVisibility(ESlateVisibility::Visible);
-			WidgetSettings->AddToViewport();
+			WidgetSettings->OpenUI();
 
 			PlayerController->bShowMouseCursor = true;
 		}
@@ -71,32 +69,28 @@ void AComputer::PCinteract()
 	if (!Character || !PlayerController)
 		return;
 
-	if (Character->bIsTraceWithActor()) 
+	if (WidgetSettings) 
 	{
-		if (CanInteractWithPc && bIsInCharacterRange())
+		if (Character->bIsTraceWithActor())
 		{
-			bIsComputerOn = !bIsComputerOn;
-
-			if (bIsComputerOn) 
+			if (CanInteractWithPc && bIsInCharacterRange())
 			{
-				if (WidgetSettings->Visibility != ESlateVisibility::Visible)
+				bIsComputerOn = !bIsComputerOn;
+
+				if (bIsComputerOn && WidgetSettings)
 				{
-					WidgetSettings->SetVisibility(ESlateVisibility::Visible);
-					WidgetSettings->AddToViewport();
+					WidgetSettings->OpenUI();
 
 					PlayerController->bShowMouseCursor = true;
 					Character->bCanMoveCharacter = false;
 				}
-			}
-			else
-			{
-				if (WidgetSettings->Visibility != ESlateVisibility::Hidden)
+				else
 				{
-					WidgetSettings->SetVisibility(ESlateVisibility::Hidden);
-					WidgetSettings->RemoveFromParent();
+					WidgetSettings->CloseUI();
 
 					PlayerController->bShowMouseCursor = false;
 					Character->bCanMoveCharacter = true;
+
 				}
 			}
 		}
