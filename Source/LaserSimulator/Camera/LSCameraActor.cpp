@@ -28,6 +28,7 @@ void ALSCameraActor::Tick(float DeltaTime)
 	{
 		FVector TargetLocation = Character->GetActorLocation();
 		FVector NewCameraLocation = FMath::VInterpTo(GetActorLocation(), TargetLocation + FVector(-XGap, 0.f, 0.f), DeltaTime, CameraSpeed);
+		NewCameraLocation.Z = 200;
 		SetActorLocation(NewCameraLocation);
 
 		PC->GetInputMouseDelta(DeltaX, DeltaY);

@@ -81,7 +81,7 @@ bool ALSCharacter::bIsTraceWithActor()
 			FRotator CameraRotation = Camera->GetActorRotation();
 
 			FVector StarPosition = CameraPosition;
-			FVector EndPosition = StarPosition + (CameraRotation.Vector()) * 200.0f;
+			FVector EndPosition = StarPosition + (CameraRotation.Vector()) * 400.0f;
 
 			DrawDebugLine(GetWorld(), StarPosition, EndPosition, FColor::Emerald, false, 0.05f, 0.0f, 1.0f);
 
@@ -89,12 +89,12 @@ bool ALSCharacter::bIsTraceWithActor()
 
 			if (bIsHit)
 			{
-				if (OutHit.GetActor()->GetActorLabel() == Computer->GetActorLabel()) 
+				if (OutHit.GetActor()->GetActorNameOrLabel() == Computer->GetActorNameOrLabel())
 				{
 					Computer->CanInteractWithPc = true;
 					return bIsHit;
 				}
-				else if (OutHit.GetActor()->GetActorLabel() == Laser->GetActorLabel()) 
+				else if (OutHit.GetActor()->GetActorNameOrLabel() == Laser->GetActorNameOrLabel())
 				{
 					Laser->CanInteractWithLaser = true;
 					return bIsHit;

@@ -23,6 +23,9 @@ public:
 	float XGap = 700.f;
 
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite)
+	float CameraHeight = 0.0f;
+
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite)
 	float CameraSpeed = 700.f;
 
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite)
