@@ -37,7 +37,7 @@ void ALSCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (Camera) 
+	if (Camera && bCanMoveCharacter)
 	{
 		FRotator CameraRotation = Camera->GetActorRotation();
 

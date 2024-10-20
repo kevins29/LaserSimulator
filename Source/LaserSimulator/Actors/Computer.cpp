@@ -68,7 +68,7 @@ void AComputer::Tick(float DeltaTime)
 
 void AComputer::PCinteract()
 {
-	if (!Character)
+	if (!Character || !PlayerController)
 		return;
 
 	if (Character->bIsTraceWithActor()) 
@@ -85,6 +85,7 @@ void AComputer::PCinteract()
 					WidgetSettings->AddToViewport();
 
 					PlayerController->bShowMouseCursor = true;
+					Character->bCanMoveCharacter = false;
 				}
 			}
 			else
@@ -95,6 +96,7 @@ void AComputer::PCinteract()
 					WidgetSettings->RemoveFromParent();
 
 					PlayerController->bShowMouseCursor = false;
+					Character->bCanMoveCharacter = true;
 				}
 			}
 		}

@@ -23,6 +23,9 @@ public:
 	FVector LastMovementDirection;
 
 	UPROPERTY(Transient)
+	bool bCanMoveCharacter = true;
+
+	UPROPERTY(Transient)
 	class ALSCameraActor* Camera;
 
 	UPROPERTY(Transient)
