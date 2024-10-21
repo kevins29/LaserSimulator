@@ -53,11 +53,35 @@ void ALSPlayerController::InputInteract()
 {
 	if (Computer && Laser) 
 	{
-		Computer->PCinteract();
+		Computer->PCInteract();
+		if (GEngine)
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("InteractWithPc"));
 		
 		if (Computer->bIsComputerOn) 
 		{
 			Laser->LaserInteract();
 		}
 	}
+}
+
+void ALSPlayerController::DisableMouseCursor()
+{
+	bShowMouseCursor = false;
+
+	SetInputMode(FInputModeGameOnly());
+
+	SetIgnoreLookInput(false);
+	SetIgnoreMoveInput(false);
+}
+
+void ALSPlayerController::EnableMouseCursor()
+{
+	bShowMouseCursor = true;
+
+	FInputModeGameAndUI InputMode;
+	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+	SetInputMode(InputMode);
+
+	SetIgnoreLookInput(false);
+	SetIgnoreMoveInput(false);
 }

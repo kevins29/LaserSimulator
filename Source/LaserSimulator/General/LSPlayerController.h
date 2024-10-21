@@ -20,6 +20,9 @@ public:
 	void InputMovementY(float Value);
 
 	void InputInteract();
+
+	void DisableMouseCursor();
+	void EnableMouseCursor();
 	
 	FVector2D InputMovement = FVector2D::ZeroVector;
 

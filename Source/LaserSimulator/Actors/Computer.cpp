@@ -45,60 +45,48 @@ void AComputer::Tick(float DeltaTime)
 
 	if (WidgetSettings && PlayerController)
 	{
-		if (!bIsInCharacterRange())
-		{
-			WidgetSettings->CloseUI();
-
-			PlayerController->bShowMouseCursor = false;
-		}
-		else if (bIsComputerOn && bIsInCharacterRange())
+		if (bIsComputerOn && bIsInCharacterRange())
 		{
 			WidgetSettings->OpenUI();
 
 			PlayerController->bShowMouseCursor = true;
 		}
-	}
-	if (GEngine)
-	{
-		//GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, FString::Printf(TEXT("bIsInCharacterRange(): %s"), bIsInCharacterRange() ? TEXT("true") : TEXT("false")));
+		else
+		{
+			WidgetSettings->CloseUI();
+
+			PlayerController->bShowMouseCursor = false;
+		}
 	}
 }
 
-void AComputer::PCinteract()
+void AComputer::PCInteract()
 {
 	if (!Character || !PlayerController)
 		return;
 
-	if (WidgetSettings) 
+	if (WidgetSettings && CanInteractWithPc)
 	{
-		if (Character->bIsTraceWithActor())
+		bIsComputerOn = !bIsComputerOn;
+
+		if (bIsComputerOn)
 		{
-			if (CanInteractWithPc && bIsInCharacterRange())
-			{
-				bIsComputerOn = !bIsComputerOn;
+			WidgetSettings->OpenUI();
 
-				if (bIsComputerOn && WidgetSettings)
-				{
-					WidgetSettings->OpenUI();
-
-					PlayerController->bShowMouseCursor = true;
-					Character->bCanMoveCharacter = false;
-				}
-				else
-				{
-					WidgetSettings->CloseUI();
-
-					PlayerController->bShowMouseCursor = false;
-					Character->bCanMoveCharacter = true;
-
-				}
-			}
+			
+			PlayerController->EnableMouseCursor();
+			Character->bCanMoveCharacter = false;
 		}
-	}
+		else
+		{
+			WidgetSettings->CloseUI();
 
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Cyan, FString::Printf(TEXT("bIsComputerOn: %s"), bIsComputerOn ? TEXT("true") : TEXT("false")));
+			CanInteractWithPc = false;
+			
+			PlayerController->DisableMouseCursor();
+			Character->bCanMoveCharacter = true;
+
+		}
 	}
 }
 

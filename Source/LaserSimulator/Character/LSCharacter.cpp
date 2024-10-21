@@ -100,11 +100,6 @@ bool ALSCharacter::bIsTraceWithActor()
 					return bIsHit;
 				}
 			}
-			else 
-			{
-				Computer->CanInteractWithPc = false;
-				Laser->CanInteractWithLaser = false;
-			}
 		}
 	}
 

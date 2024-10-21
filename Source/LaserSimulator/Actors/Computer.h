@@ -41,7 +41,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void PCinteract();
+	void PCInteract();
 	bool bIsInCharacterRange();
 
 };
