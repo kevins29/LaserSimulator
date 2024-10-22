@@ -45,13 +45,7 @@ void AComputer::Tick(float DeltaTime)
 
 	if (WidgetSettings && PlayerController)
 	{
-		if (bIsComputerOn && bIsInCharacterRange())
-		{
-			WidgetSettings->OpenUI();
-
-			PlayerController->bShowMouseCursor = true;
-		}
-		else
+		if (bIsComputerOn && !bIsInCharacterRange())
 		{
 			WidgetSettings->CloseUI();
 

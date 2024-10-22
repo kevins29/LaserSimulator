@@ -3,6 +3,7 @@
 
 #include "General/LSPlayerController.h"
 #include "Character/LSCharacter.h"
+#include "Managers/LaserSimulatorManager.h"
 #include "Actors/Computer.h"
 #include "Actors/Laser.h"
 
@@ -17,6 +18,7 @@ void ALSPlayerController::SetupInputComponent()
 	InputComponent->BindAxis("MovementY", this, &ALSPlayerController::InputMovementY);
 
 	InputComponent->BindAction("Interact",IE_Pressed, this, &ALSPlayerController::InputInteract);
+	InputComponent->BindAction("Pause", IE_Pressed, this, &ALSPlayerController::InputPauseMenu);
 }
 
 void ALSPlayerController::BeginPlay()
@@ -26,6 +28,7 @@ void ALSPlayerController::BeginPlay()
 	Character = Cast<ALSCharacter>(GetPawn());
 	Computer = Cast<AComputer>(UGameplayStatics::GetActorOfClass(GetWorld(), AComputer::StaticClass()));
 	Laser = Cast<ALaser>(UGameplayStatics::GetActorOfClass(GetWorld(), ALaser::StaticClass()));
+	LaserManager = Cast<ALaserSimulatorManager>(UGameplayStatics::GetActorOfClass(GetWorld(), ALaserSimulatorManager::StaticClass()));
 }
 
 void ALSPlayerController::Tick(float DeltaTime)
@@ -84,4 +87,23 @@ void ALSPlayerController::EnableMouseCursor()
 
 	SetIgnoreLookInput(false);
 	SetIgnoreMoveInput(false);
+}
+
+void ALSPlayerController::InputPauseMenu()
+{
+	if (LaserManager) 
+	{
+		if (!bShouldCreateWidget)
+		{
+			LaserManager->OpenPauseUI();
+			
+			bShouldCreateWidget = true;
+		}
+		else if (bShouldCreateWidget) 
+		{
+			LaserManager->ClosePauseUI();
+			
+			bShouldCreateWidget = false;
+		}
+	}
 }

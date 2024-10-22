@@ -21,10 +21,17 @@ public:
 
 	void InputInteract();
 
+	UFUNCTION(BlueprintCallable)
 	void DisableMouseCursor();
+
+	UFUNCTION(BlueprintCallable)
 	void EnableMouseCursor();
+
+	void InputPauseMenu();
 	
 	FVector2D InputMovement = FVector2D::ZeroVector;
+
+	bool bShouldCreateWidget = false;
 
 
 public:
@@ -35,6 +42,9 @@ public:
 
 	UPROPERTY(Transient)
 	class ALaser* Laser;
+
+	UPROPERTY(Transient)
+	class ALaserSimulatorManager* LaserManager;
 
 private:
 
