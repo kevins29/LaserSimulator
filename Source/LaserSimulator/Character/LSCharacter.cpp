@@ -53,8 +53,6 @@ void ALSCharacter::Tick(float DeltaTime)
 			LastMovementDirection = MovementDirection;
 		}
 	}
-
-	bIsTraceWithActor(this);
 }
 
 // Called to bind functionality to input
@@ -83,7 +81,7 @@ bool ALSCharacter::bIsTraceWithActor(AActor* OtherActor)
 			FVector StarPosition = CameraPosition;
 			FVector EndPosition = StarPosition + (CameraRotation.Vector()) * 400.0f;
 
-			DrawDebugLine(GetWorld(), StarPosition, EndPosition, FColor::Emerald, false, 0.05f, 0.0f, 1.0f);
+			//DrawDebugLine(GetWorld(), StarPosition, EndPosition, FColor::Emerald, false, 0.05f, 0.0f, 1.0f);
 
 			bool bIsHit = GetWorld()->LineTraceSingleByChannel(OutHit, StarPosition, EndPosition, CustomHitCollisionChannnel, QueryParams);
 

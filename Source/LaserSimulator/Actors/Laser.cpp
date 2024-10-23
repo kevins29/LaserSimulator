@@ -69,7 +69,6 @@ void ALaser::LaserInteract()
 			PlayerController->DisableMouseCursor();
 		}
 	}
-	
 }
 
 bool ALaser::bIsCharacterOnRange()
