@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "LSPlayerController.generated.h"
 
+class USettingsWidget;
+
 /**
  * 
  */
@@ -29,6 +31,8 @@ public:
 
 	void InputPauseMenu();
 	
+	void LoadImageFromPC(USettingsWidget* InWidget);
+
 	FVector2D InputMovement = FVector2D::ZeroVector;
 
 	bool bShouldCreateWidget = true;
@@ -46,10 +50,14 @@ public:
 	UPROPERTY(Transient)
 	class ALaserSimulatorManager* LaserManager;
 
+	FString OpenFileDialogue();
+	UTexture2D* LoadedTextureFromFile(const FString& FilePath);
+
 private:
 
 	virtual void Tick(float DeltaTime) override;
 	void SetupInputComponent() override;
 	virtual void BeginPlay() override;
 
+	
 };

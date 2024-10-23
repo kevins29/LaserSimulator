@@ -6,8 +6,13 @@
 #include "Managers/LaserSimulatorManager.h"
 #include "Actors/Computer.h"
 #include "Actors/Laser.h"
+#include "UI/SettingsWidget.h"
 
 #include "Kismet/GameplayStatics.h"
+#include "IDesktopPlatform.h"
+#include "DesktopPlatformModule.h"
+#include "Components/Image.h"
+#include "ImageUtils.h"
 
 
 void ALSPlayerController::SetupInputComponent()
@@ -98,4 +103,48 @@ void ALSPlayerController::InputPauseMenu()
 			bShouldCreateWidget = true;
 		}
 	}
+}
+
+void ALSPlayerController::LoadImageFromPC(USettingsWidget* InWidget)
+{
+	if (InWidget) 
+	{
+		FString FilePath = OpenFileDialogue();
+
+		if (!FilePath.IsEmpty()) 
+		{
+			UTexture2D* LoadedTexture = LoadedTextureFromFile(FilePath);
+
+			if (LoadedTexture) 
+			{
+				InWidget->UpdtadeImage(LoadedTexture);
+			}
+		}
+	}
+}
+
+FString ALSPlayerController::OpenFileDialogue()
+{
+	TArray<FString> OutFiles;
+	IDesktopPlatform* Desktop = FDesktopPlatformModule::Get();
+
+	if (Desktop) 
+	{
+		Desktop->OpenFileDialog(nullptr, TEXT("Select Image"), TEXT(""), TEXT(""), TEXT("Image Files (*.png;*.jpg)|*.png;*.jpg)"), EFileDialogFlags::None, OutFiles);
+	}
+
+	return OutFiles.Num() > 0 ? OutFiles[0] : FString();
+}
+
+UTexture2D* ALSPlayerController::LoadedTextureFromFile(const FString& FilePath)
+{
+	UTexture2D* Texture = nullptr;
+	TArray<uint8> RawfileData;
+
+	if (FFileHelper::LoadFileToArray(RawfileData, *FilePath)) 
+	{
+		Texture = FImageUtils::ImportBufferAsTexture2D(RawfileData);
+	}
+
+	return Texture;
 }

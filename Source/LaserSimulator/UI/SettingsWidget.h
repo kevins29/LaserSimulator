@@ -30,4 +30,16 @@ public:
 
 	UFUNCTION()
 	void OnButtonCliked();
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton* OpenFileButton;
+
+	UPROPERTY(meta = (BindWidget))
+	class UImage* ImageWidget;
+
+	UFUNCTION()
+	void OnButtonOpenFileCliked();
+
+	UFUNCTION(BlueprintCallable)
+	void UpdtadeImage(UTexture2D* LoadedTexture);
 };
