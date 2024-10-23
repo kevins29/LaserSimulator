@@ -31,7 +31,7 @@ void ALaser::BeginPlay()
 
 		if (WidgetSettings)
 		{
-			WidgetSettings->SetVisibility(ESlateVisibility::Hidden);
+			WidgetSettings->CloseUI();
 		}
 	}
 }
@@ -42,58 +42,34 @@ void ALaser::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	bIsCharacterOnRange();
-
-	if (WidgetSettings && PlayerController) 
-	{
-		if (!bIsCharacterOnRange() && WidgetSettings->Visibility != ESlateVisibility::Hidden)
-		{
-			WidgetSettings->SetVisibility(ESlateVisibility::Hidden);
-			WidgetSettings->RemoveFromParent();
-
-			PlayerController->bShowMouseCursor = false;
-		}
-	}
 }
 
 void ALaser::LaserInteract()
 {
-	if (!Character || !PlayerController || !WidgetSettings)
+	if (!Character)
 		return;
 
-	bool bHideWidget = false;
+	if (!PlayerController)
+		return;
 
-	if (Character->bIsTraceWithActor() && WidgetSettings && PlayerController)
+	if (WidgetSettings && Character->bIsTraceWithActor(this))
 	{
-		if (CanInteractWithLaser && bIsCharacterOnRange())
+		CanInteractWithLaser = !CanInteractWithLaser;
+
+		if (CanInteractWithLaser)
 		{
-			bHideWidget = !bHideWidget;
-
-			if (bHideWidget) 
-			{
-				if (WidgetSettings->Visibility != ESlateVisibility::Visible)
-				{
-					WidgetSettings->SetVisibility(ESlateVisibility::Visible);
-					WidgetSettings->AddToViewport();
-
-					PlayerController->bShowMouseCursor = true;
-				}
-			}
-			else 
-			{
-				if (WidgetSettings->Visibility != ESlateVisibility::Hidden)
-				{
-					WidgetSettings->SetVisibility(ESlateVisibility::Hidden);
-					WidgetSettings->RemoveFromParent();
-
-					PlayerController->bShowMouseCursor = false;
-				}
-			}
-			if (GEngine)
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Blue, FString::Printf(TEXT("bHideWidget: %s"), bHideWidget ? TEXT("true") : TEXT("false")));
-			}
+			WidgetSettings->OpenUI();
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Some debug message!"));
+			PlayerController->EnableMouseCursor();
+		}
+		else
+		{
+			WidgetSettings->CloseUI();
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Some debug message!"));
+			PlayerController->DisableMouseCursor();
 		}
 	}
+	
 }
 
 bool ALaser::bIsCharacterOnRange()

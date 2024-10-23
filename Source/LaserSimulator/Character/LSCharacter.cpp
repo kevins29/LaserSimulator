@@ -37,7 +37,7 @@ void ALSCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (Camera && bCanMoveCharacter)
+	if (Camera)
 	{
 		FRotator CameraRotation = Camera->GetActorRotation();
 
@@ -54,7 +54,7 @@ void ALSCharacter::Tick(float DeltaTime)
 		}
 	}
 
-	bIsTraceWithActor();
+	bIsTraceWithActor(this);
 }
 
 // Called to bind functionality to input
@@ -64,9 +64,9 @@ void ALSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 }
 
-bool ALSCharacter::bIsTraceWithActor()
+bool ALSCharacter::bIsTraceWithActor(AActor* OtherActor)
 {
-	if (Camera && Computer && Laser) 
+	if (OtherActor && Camera)
 	{
 		FCollisionQueryParams QueryParams;
 		FHitResult OutHit;
@@ -89,14 +89,8 @@ bool ALSCharacter::bIsTraceWithActor()
 
 			if (bIsHit)
 			{
-				if (OutHit.GetActor()->GetActorNameOrLabel() == Computer->GetActorNameOrLabel())
+				if (OutHit.GetActor()->GetActorNameOrLabel() == OtherActor->GetActorNameOrLabel())
 				{
-					Computer->CanInteractWithPc = true;
-					return bIsHit;
-				}
-				else if (OutHit.GetActor()->GetActorNameOrLabel() == Laser->GetActorNameOrLabel())
-				{
-					Laser->CanInteractWithLaser = true;
 					return bIsHit;
 				}
 			}

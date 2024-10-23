@@ -17,7 +17,7 @@ void ALSPlayerController::SetupInputComponent()
 	InputComponent->BindAxis("MovementX", this, &ALSPlayerController::InputMovementX);
 	InputComponent->BindAxis("MovementY", this, &ALSPlayerController::InputMovementY);
 
-	InputComponent->BindAction("Interact",IE_Pressed, this, &ALSPlayerController::InputInteract);
+	InputComponent->BindAction("Interact",IE_Pressed, this, &ALSPlayerController::InteractWithObject);
 	InputComponent->BindAction("Pause", IE_Pressed, this, &ALSPlayerController::InputPauseMenu);
 }
 
@@ -52,19 +52,13 @@ void ALSPlayerController::InputMovementY(float Value)
 	}
 }
 
-void ALSPlayerController::InputInteract()
+void ALSPlayerController::InteractWithObject()
 {
-	if (Computer && Laser) 
-	{
-		Computer->PCInteract();
-		if (GEngine)
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("InteractWithPc"));
-		
-		if (Computer->bIsComputerOn) 
-		{
-			Laser->LaserInteract();
-		}
-	}
+	if (!Computer || !Laser) 
+		return;
+
+	Computer->PCInteract();
+	Laser->LaserInteract();
 }
 
 void ALSPlayerController::DisableMouseCursor()
@@ -93,17 +87,15 @@ void ALSPlayerController::InputPauseMenu()
 {
 	if (LaserManager) 
 	{
-		if (!bShouldCreateWidget)
+		if (bShouldCreateWidget)
 		{
 			LaserManager->OpenPauseUI();
-			
-			bShouldCreateWidget = true;
+			bShouldCreateWidget = false;
 		}
-		else if (bShouldCreateWidget) 
+		else 
 		{
 			LaserManager->ClosePauseUI();
-			
-			bShouldCreateWidget = false;
+			bShouldCreateWidget = true;
 		}
 	}
 }

@@ -23,9 +23,6 @@ public:
 	FVector LastMovementDirection;
 
 	UPROPERTY(Transient)
-	bool bCanMoveCharacter = true;
-
-	UPROPERTY(Transient)
 	class ALSCameraActor* Camera;
 
 	UPROPERTY(Transient)
@@ -34,7 +31,7 @@ public:
 	UPROPERTY(Transient)
 	class ALaser* Laser;
 
-	bool bIsTraceWithActor();
+	bool bIsTraceWithActor(AActor* OtherActor);
 
 
 protected:

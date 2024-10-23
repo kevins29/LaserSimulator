@@ -19,7 +19,7 @@ public:
 	void InputMovementX(float Value);
 	void InputMovementY(float Value);
 
-	void InputInteract();
+	void InteractWithObject();
 
 	UFUNCTION(BlueprintCallable)
 	void DisableMouseCursor();
@@ -31,7 +31,7 @@ public:
 	
 	FVector2D InputMovement = FVector2D::ZeroVector;
 
-	bool bShouldCreateWidget = false;
+	bool bShouldCreateWidget = true;
 
 
 public:

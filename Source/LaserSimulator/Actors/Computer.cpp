@@ -48,38 +48,31 @@ void AComputer::Tick(float DeltaTime)
 		if (bIsComputerOn && !bIsInCharacterRange())
 		{
 			WidgetSettings->CloseUI();
-
-			PlayerController->bShowMouseCursor = false;
 		}
 	}
 }
 
 void AComputer::PCInteract()
 {
-	if (!Character || !PlayerController)
+	if (!Character)
 		return;
 
-	if (WidgetSettings && CanInteractWithPc)
+	if (!PlayerController)
+		return;
+
+	if (WidgetSettings && Character->bIsTraceWithActor(this))
 	{
 		bIsComputerOn = !bIsComputerOn;
 
 		if (bIsComputerOn)
 		{
 			WidgetSettings->OpenUI();
-
-			
 			PlayerController->EnableMouseCursor();
-			Character->bCanMoveCharacter = false;
 		}
 		else
 		{
 			WidgetSettings->CloseUI();
-
-			CanInteractWithPc = false;
-			
 			PlayerController->DisableMouseCursor();
-			Character->bCanMoveCharacter = true;
-
 		}
 	}
 }
