@@ -123,6 +123,15 @@ void ALSPlayerController::LoadImageFromPC(USettingsWidget* InWidget)
 	}
 }
 
+void ALSPlayerController::StartGravingImage()
+{
+	if (Laser && bCanStartEngraving)
+	{
+		Laser->SpawnTable();
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Se llamo la funcion del Laser para spawnear"));
+	}
+}
+
 FString ALSPlayerController::OpenFileDialogue()
 {
 	TArray<FString> OutFiles;

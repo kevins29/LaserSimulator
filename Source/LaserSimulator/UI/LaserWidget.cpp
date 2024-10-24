@@ -35,11 +35,12 @@ void ULaserWidget::StartEngraving()
 
 	if (PlayerController)
 	{
-		if (PlayerController->bCanStartEngraving) 
+		if (PlayerController->bIsFileExport) 
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Can Start Graving"));
+			PlayerController->StartGravingImage();
 		}
-		else
+		else if (PlayerController->bCanStartCuting)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Cant Start Graving"));
 		}

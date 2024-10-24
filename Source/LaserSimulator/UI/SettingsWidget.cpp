@@ -65,10 +65,10 @@ void USettingsWidget::ExportFile()
 
 	if (PlayerController)
 	{
-		if (bCanExportFile)
+		if (PlayerController->bCanStartEngraving)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("File was exported"));
-			PlayerController->bCanStartEngraving = true;
+			PlayerController->bIsFileExport = true;
 		}
 		else 
 		{
@@ -86,7 +86,7 @@ void USettingsWidget::GrabFile()
 	{
 		if (!PlayerController->ExportedFilePath.IsEmpty()) 
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Debes seleccionar un archivo"));
+			PlayerController->bCanStartEngraving = true;
 		}
 		else 
 		{

@@ -24,6 +24,9 @@ public:
 	UPROPERTY(EditInstanceOnly)
 	TSubclassOf<class ULaserWidget> WSettings;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class ATable> TableToSpawn;
+
 	UPROPERTY(Transient)
 	class ULaserWidget* WidgetSettings;
 
@@ -42,5 +45,5 @@ public:
 
 	bool bIsCharacterOnRange();
 
-	void BeginLaserEngraving();
+	void SpawnTable();
 };

@@ -2,8 +2,9 @@
 
 
 #include "Actors/Laser.h"
-#include "Character/LSCharacter.h"
 #include "Actors/Computer.h"
+#include "Actors/Table.h"
+#include "Character/LSCharacter.h"
 #include "UI/LaserWidget.h"
 #include "General/LSPlayerController.h"
 
@@ -87,14 +88,19 @@ bool ALaser::bIsCharacterOnRange()
 	return false;
 }
 
-void ALaser::BeginLaserEngraving()
+void ALaser::SpawnTable()
 {
-	if (PlayerController && WidgetSettings) 
+	if (TableToSpawn) 
 	{
-		if (!PlayerController->ExportedFilePath.IsEmpty())
-		{
-			WidgetSettings->SetExportedFile(PlayerController->ExportedFilePath);
-		}
-		
+		FVector LaserLocation = GetActorLocation();
+		LaserLocation.Z =+ 200;
+		FRotator LaserRotation = GetActorRotation();
+
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this;
+		SpawnParams.bNoFail = true;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+		ATable* Table = GetWorld()->SpawnActor<ATable>(TableToSpawn, LaserLocation, LaserRotation, SpawnParams);
 	}
 }

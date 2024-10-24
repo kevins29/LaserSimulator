@@ -33,6 +33,8 @@ public:
 	
 	void LoadImageFromPC(USettingsWidget* InWidget);
 
+	void StartGravingImage();
+
 	UPROPERTY(Transient)
 	FVector2D InputMovement = FVector2D::ZeroVector;
 
@@ -41,6 +43,12 @@ public:
 
 	UPROPERTY(Transient)
 	bool bCanStartEngraving = false;
+
+	UPROPERTY(Transient)
+	bool bCanStartCuting = false;
+
+	UPROPERTY(Transient)
+	bool bIsFileExport = false;
 
 	UPROPERTY(Transient)
 	FString ExportedFilePath;

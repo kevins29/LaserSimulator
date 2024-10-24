@@ -18,8 +18,6 @@ ATable::ATable()
 void ATable::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	PlayerController = Cast<ALSPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 
 }
 
@@ -28,13 +26,5 @@ void ATable::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-}
-
-void ATable::EngravingImage()
-{
-	if (PlayerController && Image) 
-	{
-		Image = PlayerController->LoadedTextureFromFile(PlayerController->OpenFileDialogue());
-	}
 }
 

@@ -48,5 +48,7 @@ public:
 protected:
 
 	virtual void NativeConstruct() override;
+
+	void SpawnEngravingWidget();
 	
 };
