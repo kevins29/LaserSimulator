@@ -4,7 +4,7 @@
 #include "Actors/Laser.h"
 #include "Character/LSCharacter.h"
 #include "Actors/Computer.h"
-#include "UI/SettingsWidget.h"
+#include "UI/LaserWidget.h"
 #include "General/LSPlayerController.h"
 
 #include "Kismet/GameplayStatics.h"
@@ -27,7 +27,7 @@ void ALaser::BeginPlay()
 
 	if (WSettings) 
 	{
-		WidgetSettings = CreateWidget<USettingsWidget>(GetWorld(), WSettings);
+		WidgetSettings = CreateWidget<ULaserWidget>(GetWorld(), WSettings);
 
 		if (WidgetSettings)
 		{

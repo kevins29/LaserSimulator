@@ -22,10 +22,10 @@ public:
 	bool CanInteractWithLaser = false;
 
 	UPROPERTY(EditInstanceOnly)
-	TSubclassOf<class USettingsWidget> WSettings;
+	TSubclassOf<class ULaserWidget> WSettings;
 
 	UPROPERTY(Transient)
-	class USettingsWidget* WidgetSettings;
+	class ULaserWidget* WidgetSettings;
 
 	UPROPERTY(Transient)
 	class ALSPlayerController* PlayerController;
