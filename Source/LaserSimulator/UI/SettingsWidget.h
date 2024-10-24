@@ -34,6 +34,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ExportFile();
 
+	UFUNCTION(BlueprintCallable)
+	void GrabFile();
+
+	UFUNCTION(BlueprintCallable)
+	void CutFile();
+
 	UPROPERTY(meta = (BindWidget))
 	class UButton* CloseUIButton;
 
@@ -42,6 +48,12 @@ public:
 
 	UPROPERTY(meta = (BindWidget))
 	class UButton* ExportFileButton;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton* GrabFileButton;
+
+	UPROPERTY(meta = (BindWidget))
+	class UButton* CutFileButton;
 
 	UFUNCTION()
 	void OnButtonCliked();

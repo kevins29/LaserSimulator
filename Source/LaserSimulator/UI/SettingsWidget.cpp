@@ -25,11 +25,13 @@ void USettingsWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	if (CloseUIButton && OpenFileButton && ExportFileButton)
+	if (CloseUIButton && OpenFileButton && ExportFileButton && CutFileButton && GrabFileButton)
 	{
 		CloseUIButton->OnClicked.AddDynamic(this, &USettingsWidget::OnButtonCliked);
 		OpenFileButton->OnClicked.AddDynamic(this, &USettingsWidget::OnButtonOpenFileCliked);
 		ExportFileButton->OnClicked.AddDynamic(this, &USettingsWidget::ExportFile);
+		CutFileButton->OnClicked.AddDynamic(this, &USettingsWidget::CutFile);
+		GrabFileButton->OnClicked.AddDynamic(this, &USettingsWidget::GrabFile);
 	}
 }
 
@@ -74,4 +76,38 @@ void USettingsWidget::ExportFile()
 		}
 	}
 	bCanExportFile = false;
+}
+
+void USettingsWidget::GrabFile()
+{
+	ALSPlayerController* PlayerController = Cast<ALSPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+
+	if (PlayerController) 
+	{
+		if (!PlayerController->ExportedFilePath.IsEmpty()) 
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Debes seleccionar un archivo"));
+		}
+		else 
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Debes seleccionar un archivo"));
+		}
+	}
+}
+
+void USettingsWidget::CutFile()
+{
+	ALSPlayerController* PlayerController = Cast<ALSPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+
+	if (PlayerController)
+	{
+		if (!PlayerController->ExportedFilePath.IsEmpty())
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("El archivo es para cortar"));
+		}
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Debes seleccionar un archivo"));
+		}
+	}
 }

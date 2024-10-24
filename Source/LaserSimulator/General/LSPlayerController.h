@@ -33,14 +33,17 @@ public:
 	
 	void LoadImageFromPC(USettingsWidget* InWidget);
 
+	UPROPERTY(Transient)
 	FVector2D InputMovement = FVector2D::ZeroVector;
 
+	UPROPERTY(Transient)
 	bool bShouldCreateWidget = true;
 
+	UPROPERTY(Transient)
 	bool bCanStartEngraving = false;
 
+	UPROPERTY(Transient)
 	FString ExportedFilePath;
-
 
 public:
 	class ALSCharacter* Character = nullptr;
@@ -62,6 +65,4 @@ private:
 	virtual void Tick(float DeltaTime) override;
 	void SetupInputComponent() override;
 	virtual void BeginPlay() override;
-
-	
 };
