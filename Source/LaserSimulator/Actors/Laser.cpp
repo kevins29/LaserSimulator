@@ -42,6 +42,7 @@ void ALaser::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	bIsCharacterOnRange();
+	//BeginLaserEngraving();
 }
 
 void ALaser::LaserInteract()
@@ -84,4 +85,16 @@ bool ALaser::bIsCharacterOnRange()
 	}
 
 	return false;
+}
+
+void ALaser::BeginLaserEngraving()
+{
+	if (PlayerController && WidgetSettings) 
+	{
+		if (!PlayerController->ExportedFilePath.IsEmpty())
+		{
+			WidgetSettings->SetExportedFile(PlayerController->ExportedFilePath);
+		}
+		
+	}
 }

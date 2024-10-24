@@ -17,29 +17,46 @@ class LASERSIMULATOR_API USettingsWidget : public UUserWidget
 
 public:
 
+	UPROPERTY(Transient)
+	FString FilePath;
+
+	UPROPERTY(Transient)
+	bool bCanExportFile = false;
+
+public:
+
 	UFUNCTION(BlueprintCallable)
 	void CloseUI();
 
 	UFUNCTION(BlueprintCallable)
 	void OpenUI();
 
-	virtual void NativeConstruct() override;
+	UFUNCTION(BlueprintCallable)
+	void ExportFile();
 
 	UPROPERTY(meta = (BindWidget))
 	class UButton* CloseUIButton;
-
-	UFUNCTION()
-	void OnButtonCliked();
 
 	UPROPERTY(meta = (BindWidget))
 	class UButton* OpenFileButton;
 
 	UPROPERTY(meta = (BindWidget))
-	class UImage* ImageWidget;
+	class UButton* ExportFileButton;
+
+	UFUNCTION()
+	void OnButtonCliked();
 
 	UFUNCTION()
 	void OnButtonOpenFileCliked();
 
 	UFUNCTION(BlueprintCallable)
 	void UpdtadeImage(UTexture2D* LoadedTexture);
+
+	UPROPERTY(meta = (BindWidget))
+	class UImage* ImageWidget;
+
+protected:
+
+	virtual void NativeConstruct() override;
+
 };

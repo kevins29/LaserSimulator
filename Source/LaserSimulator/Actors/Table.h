@@ -15,6 +15,12 @@ public:
 	// Sets default values for this actor's properties
 	ATable();
 
+	UPROPERTY(Transient)
+	class ALSPlayerController* PlayerController;
+
+	UPROPERTY(Transient, EditAnywhere);
+	class UTexture2D* Image;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -22,5 +28,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void EngravingImage();
 
 };

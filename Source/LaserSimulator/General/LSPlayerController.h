@@ -37,6 +37,10 @@ public:
 
 	bool bShouldCreateWidget = true;
 
+	bool bCanStartEngraving = false;
+
+	FString ExportedFilePath;
+
 
 public:
 	class ALSCharacter* Character = nullptr;

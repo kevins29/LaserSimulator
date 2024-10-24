@@ -2,6 +2,9 @@
 
 
 #include "Actors/Table.h"
+#include "General/LSPlayerController.h"
+
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 ATable::ATable()
@@ -16,6 +19,8 @@ void ATable::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	PlayerController = Cast<ALSPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+
 }
 
 // Called every frame
@@ -23,5 +28,13 @@ void ATable::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void ATable::EngravingImage()
+{
+	if (PlayerController && Image) 
+	{
+		Image = PlayerController->LoadedTextureFromFile(PlayerController->OpenFileDialogue());
+	}
 }
 
