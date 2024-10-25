@@ -93,7 +93,8 @@ void ALaser::SpawnTable()
 	if (TableToSpawn) 
 	{
 		FVector LaserLocation = GetActorLocation();
-		LaserLocation.Z =+ 200;
+		LaserLocation.Y =+ 200;
+		LaserLocation.Z =+ 100;
 		FRotator LaserRotation = GetActorRotation();
 
 		FActorSpawnParameters SpawnParams;
