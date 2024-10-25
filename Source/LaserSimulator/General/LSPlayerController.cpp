@@ -113,7 +113,7 @@ void ALSPlayerController::LoadImageFromPC(USettingsWidget* InWidget)
 
 		if (!ExportedFilePath.IsEmpty())
 		{
-			UTexture2D* LoadedTexture = LoadedTextureFromFile(ExportedFilePath);
+			LoadedTexture = LoadedTextureFromFile(ExportedFilePath);
 
 			if (LoadedTexture) 
 			{

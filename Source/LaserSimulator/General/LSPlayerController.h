@@ -68,6 +68,9 @@ public:
 	FString OpenFileDialogue();
 	UTexture2D* LoadedTextureFromFile(const FString& FilePath);
 
+	UPROPERTY(Transient,BlueprintReadWrite)
+	UTexture2D* LoadedTexture;
+
 private:
 
 	virtual void Tick(float DeltaTime) override;
