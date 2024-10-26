@@ -90,7 +90,7 @@ bool ALaser::bIsCharacterOnRange()
 
 void ALaser::SpawnTable()
 {
-	if (TableToSpawn) 
+	if (TableToEngravingSpawn && TableToCutSpawn) 
 	{
 		FVector LaserLocation = GetActorLocation();
 		LaserLocation.Y =+ 200;
@@ -102,6 +102,18 @@ void ALaser::SpawnTable()
 		SpawnParams.bNoFail = true;
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
-		ATable* Table = GetWorld()->SpawnActor<ATable>(TableToSpawn, LaserLocation, LaserRotation, SpawnParams);
+		ATable* Table = nullptr;
+
+		if (PlayerController)
+		{
+			if (PlayerController->bCanStartEngraving)
+			{
+				Table = GetWorld()->SpawnActor<ATable>(TableToEngravingSpawn, LaserLocation, LaserRotation, SpawnParams);
+			}
+			else if (PlayerController->bCanStartCuting)
+			{
+				Table = GetWorld()->SpawnActor<ATable>(TableToCutSpawn, LaserLocation, LaserRotation, SpawnParams);
+			}
+		}
 	}
 }

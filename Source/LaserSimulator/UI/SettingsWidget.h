@@ -17,12 +17,6 @@ class LASERSIMULATOR_API USettingsWidget : public UUserWidget
 
 public:
 
-	UPROPERTY(Transient)
-	FString FilePath;
-
-	UPROPERTY(Transient)
-	bool bCanExportFile = false;
-
 public:
 
 	UFUNCTION(BlueprintCallable)
@@ -62,7 +56,7 @@ public:
 	void OnButtonOpenFileCliked();
 
 	UFUNCTION(BlueprintCallable)
-	void UpdtadeImage(UTexture2D* LoadedTexture);
+	void UpdateImage(UTexture2D* LoadedTexture);
 
 	UPROPERTY(meta = (BindWidget))
 	class UImage* ImageWidget;

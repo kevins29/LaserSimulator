@@ -25,7 +25,10 @@ public:
 	TSubclassOf<class ULaserWidget> WSettings;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class ATable> TableToSpawn;
+	TSubclassOf<class ATable> TableToEngravingSpawn;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<class ATable> TableToCutSpawn;
 
 	UPROPERTY(Transient)
 	class ULaserWidget* WidgetSettings;

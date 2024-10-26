@@ -117,7 +117,7 @@ void ALSPlayerController::LoadImageFromPC(USettingsWidget* InWidget)
 
 			if (LoadedTexture) 
 			{
-				InWidget->UpdtadeImage(LoadedTexture);
+				InWidget->UpdateImage(LoadedTexture);
 			}
 		}
 	}
@@ -139,11 +139,11 @@ FString ALSPlayerController::OpenFileDialogue()
 UTexture2D* ALSPlayerController::LoadedTextureFromFile(const FString& FilePath)
 {
 	UTexture2D* Texture = nullptr;
-	TArray<uint8> RawfileData;
+	TArray<uint8> RawFileData;
 
-	if (FFileHelper::LoadFileToArray(RawfileData, *FilePath)) 
+	if (FFileHelper::LoadFileToArray(RawFileData, *FilePath)) 
 	{
-		Texture = FImageUtils::ImportBufferAsTexture2D(RawfileData);
+		Texture = FImageUtils::ImportBufferAsTexture2D(RawFileData);
 	}
 
 	return Texture;
@@ -151,9 +151,11 @@ UTexture2D* ALSPlayerController::LoadedTextureFromFile(const FString& FilePath)
 
 void ALSPlayerController::StartGravingImage()
 {
-	if (Laser && bCanStartEngraving)
+	if (Laser && bIsFileExport)
 	{
 		Laser->SpawnTable();
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Se llamo la funcion del Laser para spawnear"));
+		bIsFileExport = false;
+		bCanStartCuting = false;
+		bCanStartEngraving = false;
 	}
 }

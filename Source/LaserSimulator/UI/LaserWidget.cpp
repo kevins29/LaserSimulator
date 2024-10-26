@@ -31,18 +31,16 @@ void ULaserWidget::NativeConstruct()
 
 void ULaserWidget::StartEngraving()
 {
-	ALSPlayerController* PlayerController = Cast<ALSPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
-
-	if (PlayerController)
+	if (ALSPlayerController* PlayerController = Cast<ALSPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0)))
 	{
 		if (PlayerController->bIsFileExport) 
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Can Start Graving"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("Start operation"));
 			PlayerController->StartGravingImage();
 		}
-		else if (PlayerController->bCanStartCuting)
+		else
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Cant Start Graving"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Cant Start operation"));
 		}
 	}
 }

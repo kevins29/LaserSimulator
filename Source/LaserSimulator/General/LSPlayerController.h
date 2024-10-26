@@ -65,8 +65,8 @@ public:
 	UPROPERTY(Transient)
 	class ALaserSimulatorManager* LaserManager;
 
-	FString OpenFileDialogue();
-	UTexture2D* LoadedTextureFromFile(const FString& FilePath);
+	static FString OpenFileDialogue();
+	static UTexture2D* LoadedTextureFromFile(const FString& FilePath);
 
 	UPROPERTY(Transient,BlueprintReadWrite)
 	UTexture2D* LoadedTexture;
