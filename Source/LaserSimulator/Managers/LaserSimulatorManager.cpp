@@ -55,7 +55,7 @@ void ALaserSimulatorManager::OpenPauseUI()
 	if (PauseWidget && PlayerController)
 	{
 		PauseWidget->ShowUI();
-		PlayerController->EnableMouseCursor();
+		PlayerController->EnableMouseCursor(PauseWidget);
 	}
 }
 

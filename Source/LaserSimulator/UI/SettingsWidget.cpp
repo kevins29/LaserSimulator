@@ -11,6 +11,7 @@
 void USettingsWidget::CloseUI()
 {
 	SetVisibility(ESlateVisibility::Hidden);
+	//RemoveFromParent();
 }
 
 void USettingsWidget::OpenUI()
@@ -65,6 +66,7 @@ void USettingsWidget::GrabFile()
 		{
 			PlayerController->bCanStartEngraving = true;
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("The file is for graving"));
+		
 		}
 		else 
 		{
@@ -91,6 +93,9 @@ void USettingsWidget::CutFile()
 
 void USettingsWidget::ExportFile()
 {
+	if (!ImageWidget)
+		return;
+
 	if (ALSPlayerController* PlayerController = Cast<ALSPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0)))
 	{
 		if (PlayerController->bCanStartEngraving && !PlayerController->bCanStartCuting
@@ -98,6 +103,7 @@ void USettingsWidget::ExportFile()
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("File was exported"));
 			PlayerController->bIsFileExport = true;
+			ImageWidget->SetOpacity(0.f);
 		}
 		else if (PlayerController->bCanStartEngraving && PlayerController->bCanStartCuting)
 		{

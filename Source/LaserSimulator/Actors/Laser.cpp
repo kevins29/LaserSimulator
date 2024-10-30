@@ -61,13 +61,11 @@ void ALaser::LaserInteract()
 		if (CanInteractWithLaser)
 		{
 			WidgetSettings->OpenUI();
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Some debug message!"));
-			PlayerController->EnableMouseCursor();
+			PlayerController->EnableMouseCursor(WidgetSettings);
 		}
 		else
 		{
 			WidgetSettings->CloseUI();
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Some debug message!"));
 			PlayerController->DisableMouseCursor();
 		}
 	}
@@ -109,6 +107,8 @@ void ALaser::SpawnTable()
 			if (PlayerController->bCanStartEngraving)
 			{
 				Table = GetWorld()->SpawnActor<ATable>(TableToEngravingSpawn, LaserLocation, LaserRotation, SpawnParams);
+
+				
 			}
 			else if (PlayerController->bCanStartCuting)
 			{

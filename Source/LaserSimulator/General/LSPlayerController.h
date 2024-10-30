@@ -27,7 +27,7 @@ public:
 	void DisableMouseCursor();
 
 	UFUNCTION(BlueprintCallable)
-	void EnableMouseCursor();
+	void EnableMouseCursor(UUserWidget* WidgetToFocus);
 
 	void InputPauseMenu();
 	
@@ -54,6 +54,7 @@ public:
 	FString ExportedFilePath;
 
 public:
+	
 	class ALSCharacter* Character = nullptr;
 
 	UPROPERTY(Transient)

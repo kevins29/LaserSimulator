@@ -41,7 +41,7 @@ void ALSPlayerController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void ALSPlayerController::InputMovementX(float Value)
+void ALSPlayerController::InputMovementX(float Value)		 
 {
 	if (Character)
 	{
@@ -69,23 +69,27 @@ void ALSPlayerController::InteractWithObject()
 void ALSPlayerController::DisableMouseCursor()
 {
 	bShowMouseCursor = false;
-
+	
 	SetInputMode(FInputModeGameOnly());
-
-	SetIgnoreLookInput(false);
-	SetIgnoreMoveInput(false);
 }
 
-void ALSPlayerController::EnableMouseCursor()
+void ALSPlayerController::EnableMouseCursor(UUserWidget* WidgetToFocus)
 {
 	bShowMouseCursor = true;
+	
+	if (WidgetToFocus)
+	{
+		FInputModeGameAndUI InputMode;
+		InputMode.SetWidgetToFocus(WidgetToFocus->TakeWidget());
+		InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
+		SetInputMode(FInputModeGameAndUI());
 
-	FInputModeGameAndUI InputMode;
-	InputMode.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
-	SetInputMode(InputMode);
-
-	SetIgnoreLookInput(false);
-	SetIgnoreMoveInput(false);
+		if (WidgetToFocus->IsFocusable())
+		{
+			WidgetToFocus->SetKeyboardFocus();
+			
+		}
+	}
 }
 
 void ALSPlayerController::InputPauseMenu()
@@ -157,5 +161,6 @@ void ALSPlayerController::StartGravingImage()
 		bIsFileExport = false;
 		bCanStartCuting = false;
 		bCanStartEngraving = false;
+		ExportedFilePath = "";
 	}
 }

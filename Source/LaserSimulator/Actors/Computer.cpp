@@ -7,13 +7,14 @@
 #include "General/LSPlayerController.h"
 
 #include "Kismet/GameplayStatics.h"
+#include "Components/StaticMeshComponent.h"
 
 // Sets default values
 AComputer::AComputer()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("My Super Mesh"));
 }
 
 // Called when the game starts or when spawned
@@ -67,7 +68,7 @@ void AComputer::PCInteract()
 		if (bIsComputerOn)
 		{
 			WidgetSettings->OpenUI();
-			PlayerController->EnableMouseCursor();
+			PlayerController->EnableMouseCursor(WidgetSettings);
 		}
 		else
 		{
